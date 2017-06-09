@@ -50,10 +50,10 @@
 <img
 	class="hqy-lazy lazy-item"
 	sizes="100vw"
-	data-src="http://placehold.it/600x400?text=fallback"
-	data-srcset="http://placehold.it/1024x682?text=large 1024w,
-	http://placehold.it/600x400?text=medium 640w,
-	http://placehold.it/320x214?text=small 320w"
+	data-src="https://placehold.it/600x400?text=fallback"
+	data-srcset="https://placehold.it/1024x682?text=large 1024w,
+	https://placehold.it/600x400?text=medium 640w,
+	https://placehold.it/320x214?text=small 320w"
 />
 </div>
 
@@ -69,9 +69,9 @@
 
 <div class="wrapper ratio">
 	<picture>
-		<source media="(min-width: 650px)" data-srcset="http://placehold.it/1024x682?text=Min-650"/>
-		<source media="(min-width: 465px)" data-srcset="http://placehold.it/600x400?text=Min-465"/>
-		<img class="hqy-lazy lazy-item" data-src="http://placehold.it/600x400?text=default"/>
+		<source media="(min-width: 650px)" data-srcset="https://placehold.it/1024x682?text=Min-650"/>
+		<source media="(min-width: 465px)" data-srcset="https://placehold.it/600x400?text=Min-465"/>
+		<img class="hqy-lazy lazy-item" data-src="https://placehold.it/600x400?text=default"/>
 	</picture>
 </div>
 
@@ -89,7 +89,7 @@
 	<img
 		class="hqy-lazy lazy-item"
 		src="./assets/demo/placeholder.gif"
-		data-src="http://placehold.it/1024x682?text=Non-Retina,http://placehold.it/1024x682?text=Retina"
+		data-src="https://placehold.it/1024x682?text=Non-Retina,https://placehold.it/1024x682?text=Retina"
 	>
 </div>
 
