@@ -1,0 +1,59 @@
+{
+	"name": "hqy-lazyload",
+	"version": "1.0.1",
+	"description": "A fast lightweight pure JavaScript script for lazy loading and multi-serving images, iframes, videos and more.",
+	"main": "./dist/hqy-lazyload.js",
+	"readmeFilename": "README.md",
+	"scripts": {
+		"build": "gulp build",
+		"docs": "gulp docs:build",
+		"serve": "gulp docs:server"
+	},
+	"devDependencies": {
+		"browser-sync": "^2.18.12",
+		"del": "^2.2.2",
+		"gulp": "^3.9.1",
+		"gulp-concat": "^2.6.1",
+		"gulp-less": "^3.3.0",
+		"gulp-markdown": "^1.2.0",
+		"gulp-plumber": "^1.1.0",
+		"gulp-replace": "^0.5.4",
+		"gulp-sequence": "^0.4.6",
+		"gulp-uglify": "^3.0.0",
+		"gulp-util": "^3.0.8",
+		"gulp-wrap": "^0.13.0",
+		"highlight.js": "^9.12.0",
+		"less-plugin-autoprefix": "^1.5.1",
+		"lodash": "^4.17.4",
+		"normalize.css": "^7.0.0"
+	},
+	"keywords": [
+		"hqy-lazyload",
+		"hqy-lazyloadjs",
+		"hqy-lazyload.js",
+		"lazy",
+		"lazyload",
+		"lazyloading",
+		"image",
+		"images",
+		"picture",
+		"srcset",
+		"iframe",
+		"video",
+		"unity",
+		"retina",
+		"responsive",
+		"performance"
+	],
+	"author": "RockCookies (http://hqyrocks.com)",
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/Rockcookies/hqy-lazyload.git"
+	},
+	"bugs": {
+		"url": "https://github.com/Rockcookies/hqy-lazyload/issues"
+	},
+	"license": "MIT",
+	"homepage": "https://github.com/Rockcookies/hqy-lazyload",
+	"dependencies": {}
+}
