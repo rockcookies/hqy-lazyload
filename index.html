@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>hqy-lazyload | A fast lightweight pure JavaScript script for lazy loading and multi-serving images, iframes, videos and more.</title>
+	<meta name="description" content="A fast lightweight pure JavaScript script for lazy loading and multi-serving images, iframes, videos and more.">
+	<link rel="stylesheet" href="./assets/main.css?1496992408816">
+	<link rel="shortcut icon" href="./assets/favicon.ico">
+	<link rel="canonical" href="https://github.com/Rockcookies/hqy-lazyload">
+</head>
+<body>
+
+<div class="navigation">
+	<div class="container">
+		<a href="/" class="brand nav fl">hqy-lazyload</a>
+		<div class="navbar nav fn-clear fr">
+			<a href="./documentation.html">Documentation</a>
+			<a href="./examples.html">Examples</a>
+			<a href="https://raw.githubusercontent.com/Rockcookies/hqy-lazyload/master/dist/hqy-lazyload.min.js">Download</a>
+			<a href="https://github.com/Rockcookies/hqy-lazyload" target="blank" class="github-nav" alt="github"><img src="./assets/github.png" alt="Github"></a>
+		</div>
+	</div>
+</div>
+
+
+
+
+<div class="home-header">
+	<div class="container">
+		<img class="logo" src="./assets/logo.png" alt="logo">
+		<h1>A lazy loading and multi-serving image script.<br/>Hqy-lazyload works in all modern browsers including IE7+.</h1>
+		<p class="btn-top">
+			<a href="#get-started" class="btn">GET STARTED</a>
+			<a target="blank" class="github" href="https://github.com/Rockcookies/hqy-lazyload"><img src="./assets/github.png" alt="github">Star hqy-lazyload on Github</a>
+		</p>
+	</div>
+</div>
+
+
+<div class="container content">
+	<div class="markdown home-markdown">
+		<h2 id="get-started">Get Started</h2>
+<h3 id="install-using-npm-">Install using <code>npm</code></h3>
+<p>To install the latest release of hqy-lazyload:</p>
+<pre><code class="lang-bash">npm <span class="hljs-keyword">install</span> hqy-lazyload
+</code></pre>
+<h2 id="try-it-out">Try It Out</h2>
+<p>The following example is a lazy loading multi-serving responsive images example with a image callback, If your device width is smaller than 420 px it&#39;ll serve a lighter and smaller version of the image.</p>
+<h3 id="html-">HTML:</h3>
+<pre><code class="lang-html">&lt;img 
+    <span class="hljs-attribute">class</span>=<span class="hljs-string">"hqy-lazy"</span>
+    <span class="hljs-attribute">src</span>=<span class="hljs-string">"placeholder-image.jpg"</span>
+    <span class="hljs-attribute">data-src</span>=<span class="hljs-string">"image.jpg"</span>
+    <span class="hljs-attribute">data-src-small</span>=<span class="hljs-string">"small-image.jpg"</span>
+    <span class="hljs-attribute">alt</span>=<span class="hljs-string">"Image description"</span>
+/&gt;
+</code></pre>
+<h3 id="javascript-">JavaScript:</h3>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> hqyLazy = <span class="hljs-keyword">new</span> HqyLazyload({
+    <span class="hljs-attribute">breakpoints</span>: [{
+        <span class="hljs-attribute">width</span>: <span class="hljs-number">420</span>, <span class="hljs-comment">// Max-width</span>
+        <span class="hljs-attribute">src</span>: <span class="hljs-string">'data-src-small'</span>
+    }],
+    <span class="hljs-attribute">success</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">element</span>) </span>{
+        <span class="hljs-comment">// We want to remove the loader gif now.</span>
+        <span class="hljs-comment">// First we find the parent container</span>
+        <span class="hljs-comment">// then we remove the "loading" class which holds the loader image</span>
+        <span class="hljs-keyword">var</span> <span class="hljs-built_in">parent</span> = element.parentNode;
+        <span class="hljs-built_in">parent</span>.className = <span class="hljs-built_in">parent</span>.className.replace(<span class="hljs-regexp">/\loading\b/</span>,<span class="hljs-string">''</span>);
+    }
+});
+</code></pre>
+<h3 id="results-">Results:</h3>
+<style>
+.ratio-big {
+    padding-bottom: 56.7%;
+}
+
+.ratio-small {
+    padding-bottom: 30.7%;
+    width: 48%;
+    margin: 0;
+}
+</style>
+
+<div class="wrapper ratio-big loading">
+    <img class="hqy-lazy" src="./assets/demo/placeholder.gif" data-src="./assets/demo/01.jpg">
+</div>
+
+<div class="wrapper ratio-big loading">
+    <img class="hqy-lazy" src="./assets/demo/placeholder.gif" data-src="./assets/demo/02.jpg">
+</div>
+
+<div class="wrapper ratio-big loading">
+    <img class="hqy-lazy" src="./assets/demo/placeholder.gif" data-src="./assets/demo/03.jpg">
+</div>
+
+<div class="fn-clear">
+    <div class="wrapper ratio-small loading fl">
+        <img class="hqy-lazy" src="./assets/demo/placeholder.gif" data-src="./assets/demo/04.jpg">
+    </div>
+    <div class="wrapper ratio-small loading fr">
+        <img class="hqy-lazy" src="./assets/demo/placeholder.gif" data-src="./assets/demo/05.jpg">
+    </div>
+</div>
+
+<div class="wrapper ratio-big loading">
+    <img class="hqy-lazy" src="./assets/demo/placeholder.gif" data-src="./assets/demo/06.jpg">
+</div>
+
+<script type="text/javascript" src="./hqy-lazyload.js"></script>
+<script type="text/javascript">
+var hqyLazy = new HqyLazyload({
+    success: function (element) {
+        var parent = element.parentNode;
+        parent.className = parent.className.replace(/\loading\b/, '');
+    }
+});
+</script>
+
+	</div>
+</div>
+
+
+<div class="footer">
+	<div class="container">
+		<a href="/"><img src="./assets/logo.png" alt="logo"></a>
+		<p>Copyright 2010 - 2017, RockCookies.</p>
+		<p>Released under the MIT license.</p>
+	</div>
+</div>
+</body>
+</html>

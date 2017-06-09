@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>hqy-lazyload | A fast lightweight pure JavaScript script for lazy loading and multi-serving images, iframes, videos and more.</title>
+	<meta name="description" content="A fast lightweight pure JavaScript script for lazy loading and multi-serving images, iframes, videos and more.">
+	<link rel="stylesheet" href="./assets/main.css?1496992408816">
+	<link rel="shortcut icon" href="./assets/favicon.ico">
+	<link rel="canonical" href="https://github.com/Rockcookies/hqy-lazyload">
+</head>
+<body>
+
+<div class="navigation">
+	<div class="container">
+		<a href="/" class="brand nav fl">hqy-lazyload</a>
+		<div class="navbar nav fn-clear fr">
+			<a href="./documentation.html">Documentation</a>
+			<a href="./examples.html">Examples</a>
+			<a href="https://raw.githubusercontent.com/Rockcookies/hqy-lazyload/master/dist/hqy-lazyload.min.js">Download</a>
+			<a href="https://github.com/Rockcookies/hqy-lazyload" target="blank" class="github-nav" alt="github"><img src="./assets/github.png" alt="Github"></a>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+<div class="container content">
+	<div class="markdown ">
+		<h1 id="documentation">Documentation</h1>
+<p>hqy-lazyload is a lightweight script for lazy loading and multi-serving images. It’s written in pure JavaScript why it doesn’t depend on 3rd-party libraries such as jQuery. hqy-lazyload works on all modern browsers, including on IE7+.</p>
+<h2 id="how-to-use-hqy-lazyload-lazy-load-images-">How to use hqy-lazyload (lazy load images)</h2>
+<p>You can lazy load your images in just two easy steps.</p>
+<p><strong>Step 1)</strong> Change your image markup a bit.</p>
+<ul>
+<li>Add class “hqy-lazy”.</li>
+<li>Add a placeholder image to the image source (src). In my example I’m using a base64 encoded transparent gif so it won’t do any extra requests.</li>
+<li>Save the real image source in the data-src attribute</li>
+</ul>
+<pre><code class="lang-html">&lt;img <span class="hljs-attribute">class</span>=<span class="hljs-string">"hqy-lazy"</span> 
+    <span class="hljs-attribute">src</span>=<span class="hljs-string">"data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="</span>
+    <span class="hljs-attribute">data-src</span>=<span class="hljs-string">"image.jpg"</span>
+    <span class="hljs-attribute">alt</span>=<span class="hljs-string">"alt-text"</span>
+/&gt;
+</code></pre>
+<p><strong>Step 2)</strong> Include hqy-lazyload.js and initialize it. If you’re using jQuery (or simliar) do it in document.ready:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"hqy-lazyload.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="actionscript">
+    ;(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-comment">// Initialize</span>
+        <span class="hljs-keyword">var</span> hqyLazy = <span class="hljs-keyword">new</span> HqyLazyload();
+    })();
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</code></pre>
+<h2 id="hqy-lazyload-comes-with-a-few-options">hqy-lazyload comes with a few options</h2>
+<p><strong>Options – key [type] (default value)</strong></p>
+<table>
+<thead>
+<tr>
+<th>Options</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>breakpoints [sss] (-)</strong></td>
+<td>Multi-serve images based on screen size. <a href="#">Go to multi-serve image example</a></td>
+</tr>
+<tr>
+<td><strong>container [element] (window)</strong></td>
+<td>If you want to lazy load elements inside a scrolling container change the default value to the element of the container</td>
+</tr>
+<tr>
+<td><strong>elements [string] (‘.hqy-lazy’)</strong></td>
+<td>Element selector or document node list for elements that should lazy load. If you want to lazy load all images write ‘img’</td>
+</tr>
+<tr>
+<td><strong>error [function(ele, msg)] (-)</strong></td>
+<td>Callback for when something goes wrong. There are two error messages, missing and invalid. You’ll get missing if no data-src is defined. Invalid if the data-src is invalid. <a href="#">Go to callback example</a></td>
+</tr>
+<tr>
+<td><strong>errorClass [string] (‘.hqy-error’)</strong></td>
+<td>The classname an element will get if something goes wrong.</td>
+</tr>
+<tr>
+<td><strong>loadingClass [string] (‘.hqy-loading’)</strong></td>
+<td>The classname an element is loading.</td>
+</tr>
+<tr>
+<td><strong>loadInvisible [bool] (false)</strong></td>
+<td>Set to true if you want to load invisible (hidden) elements.</td>
+</tr>
+<tr>
+<td><strong>offset (int) [2]</strong></td>
+<td>The offset controls how early you want the elements to be loaded before they’re visible. Default is 2, so 2px before an element is visible it’ll start loading.</td>
+</tr>
+<tr>
+<td><strong>root (object) [document]</strong></td>
+<td>The root object can be changed which adds support for web components and shadow dom.</td>
+</tr>
+<tr>
+<td><strong>saveViewportOffsetDelay [int] (50)</strong></td>
+<td>Delay for how often it should call the saveViewportOffset function on resize. Default is 50ms.</td>
+</tr>
+<tr>
+<td><strong>separator [char] (‘,’)</strong></td>
+<td>Used if you want to pass retina images: data-src=”image.jpg,image@2x.jpg”. <a href="#">Go to the retina image example</a></td>
+</tr>
+<tr>
+<td><strong>src [string] (‘data-src’)</strong></td>
+<td>Attribute where the original element source can be found</td>
+</tr>
+<tr>
+<td><strong>success [function(ele)] (false)</strong></td>
+<td>Callback for when an image has loaded. <a href="#">Go to callback example</a></td>
+</tr>
+<tr>
+<td><strong>successClass [string] (‘hqy-loaded’)</strong></td>
+<td>The classname an element will get when loaded.</td>
+</tr>
+<tr>
+<td><strong>validateDelay [int] (25)</strong></td>
+<td>Delay for how often it should call the validate function on scroll/resize. Default is 25ms.</td>
+</tr>
+</tbody>
+</table>
+<p>You pass the options as an object of key/value pairs:</p>
+<pre><code class="lang-js">  <span class="hljs-comment">// Format</span>
+<span class="hljs-built_in">var</span> hqyLazy = new HqyLazyload({ 
+    <span class="hljs-built_in">key</span>: <span class="hljs-built_in">value</span>
+    , <span class="hljs-built_in">key</span>: <span class="hljs-built_in">value</span>
+    , <span class="hljs-built_in">key</span>: <span class="hljs-built_in">value</span>
+});
+</code></pre>
+<h2 id="elements">Elements</h2>
+<p>You can change the elements if you don’t want to add the ‘hqy-lazy’ class or if you need to have multiple</p>
+<pre><code class="lang-js"><span class="hljs-comment">// Example</span>
+<span class="hljs-keyword">var</span> hqyLazy = <span class="hljs-keyword">new</span> HqyLazyload({
+    elements: <span class="hljs-built_in">document</span>.<span class="hljs-built_in">querySelectorAll</span>(<span class="hljs-string">'.lazyload'</span>)
+});
+</code></pre>
+<h2 id="offset">Offset</h2>
+<p>The offset controls how early you want the elements to be loaded before they’re visible. Default is 2px, so 2px before an element is visible it’ll start loading.</p>
+<pre><code class="lang-js"><span class="hljs-comment">// Example</span>
+<span class="hljs-keyword">var</span> hqyLazy = <span class="hljs-keyword">new</span> HqyLazyload({
+    offset: <span class="hljs-number">2</span> <span class="hljs-comment">// Loads images 2px before they're visible</span>
+});
+</code></pre>
+<h2 id="images-inside-a-container">Images inside a container</h2>
+<p>You can also lazy load images inside a scrolling container, just define the selector or document node of the container:</p>
+<pre><code class="lang-js"><span class="hljs-comment">// Example</span>
+<span class="hljs-keyword">var</span> hqyLazy = <span class="hljs-keyword">new</span> HqyLazyload({
+    container: <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'scrolling-container'</span>) <span class="hljs-comment">// Default is window</span>
+});
+</code></pre>
+<h2 id="callback-when-image-has-loaded-or-fails">Callback when image has loaded or fails</h2>
+<p>If you need to do anything when an image has loaded or fails you can pass a callback function:</p>
+<pre><code class="lang-js"><span class="hljs-comment">// Example</span>
+<span class="hljs-keyword">var</span> hqyLazy = <span class="hljs-keyword">new</span> HqyLazyload({
+    success: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(ele)</span></span>{
+        <span class="hljs-comment">// Image has loaded</span>
+        <span class="hljs-comment">// Do your business here</span>
+    }, 
+    error: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(ele, msg)</span></span>{
+        <span class="hljs-keyword">if</span>(msg === <span class="hljs-string">'missing'</span>){
+            <span class="hljs-comment">// Data-src is missing</span>
+        }
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(msg === <span class="hljs-string">'invalid'</span>){
+            <span class="hljs-comment">// Data-src is invalid</span>
+        }
+    }
+});
+</code></pre>
+<h2 id="retina-images">Retina images</h2>
+<p>If you’re not doing retina-first don’t worry. It’s easy to serve retina images for retina displays. Just add the source to the retina image in the data-src by using the separator (default is ‘,’) and hqy-lazyload will do the rest:</p>
+<pre><code class="lang-html">&lt;img <span class="hljs-attribute">class</span>=<span class="hljs-string">"hqy-lazyload"</span> 
+    <span class="hljs-attribute">src</span>=<span class="hljs-string">"data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="</span>
+    <span class="hljs-attribute">data-src</span>=<span class="hljs-string">"image.jpg,retina-image.jpg"</span>
+    <span class="hljs-attribute">alt</span>=<span class="hljs-string">"alt-text"</span>
+/&gt;
+</code></pre>
+<h2 id="background-images">Background images</h2>
+<p>You can also lazy load background images. If the element with the lazy load class (default: ‘.hqy-lazy’) isn’t an image, the source will be added to the element as a background image:</p>
+<pre><code class="lang-html">&lt;div <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">"hqy-lazy"</span> data-src=<span class="hljs-string">"background-image.jpg"</span>&gt;<span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+</code></pre>
+<h2 id="multi-serve-images">Multi-serve images</h2>
+<p>You can multi-serve images, so users on smaller devices will get a smaller image served and the page will load faster. If you have more than one it’s important that the widths are ascending like in my example; 420 comes before 768. If you set up a multi rule but your image markup doesn’t have the src attribute on it, it’ll look after the default src, data-src.</p>
+<pre><code class="lang-js"><span class="hljs-comment">// Example</span>
+<span class="hljs-keyword">var</span> hqyLazy = <span class="hljs-keyword">new</span> HqyLazyload({
+    breakpoints: [{
+        width: <span class="hljs-number">420</span>, <span class="hljs-comment">// max-width</span>
+        src: <span class="hljs-number">'da</span>ta-src-<span class="hljs-keyword">small</span>'
+    }, {
+        width: <span class="hljs-number">768</span>, <span class="hljs-comment">// max-width</span>
+        src: <span class="hljs-number">'da</span>ta-src-<span class="hljs-keyword">medium</span>'
+    }]
+});
+</code></pre>
+<p>Image markup:</p>
+<pre><code class="lang-html">&lt;img <span class="hljs-attribute">class</span>=<span class="hljs-string">"hqy-lazy"</span> 
+    <span class="hljs-attribute">src</span>=<span class="hljs-string">"data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="</span>
+    <span class="hljs-attribute">data-src</span>=<span class="hljs-string">"image.jpg"</span>
+    <span class="hljs-attribute">data-src-small</span>=<span class="hljs-string">"image-small.jpg"</span>
+    <span class="hljs-attribute">data-src-medium</span>=<span class="hljs-string">"image-medium.jpg"</span>
+    <span class="hljs-attribute">alt</span>=<span class="hljs-string">"alt-text"</span>
+/&gt;
+</code></pre>
+<p>How the breakpoints works:</p>
+<blockquote>
+<p>The breakpoints are defined by the device width not the browser width. It means that it’ll look at your screen width which won’t change when you resize your browser window.
+The reason why I’m looking at the device width and not the width is that I don’t want to load multiple image sources for the same image when you resize (multiple server request per image). And if you have a big screen but the initial width of your browser window is something small I don’t want to upscale a low res image when you resize it up.</p>
+</blockquote>
+<h2 id="image-transitions">Image transitions</h2>
+<p>Image transitions are not a built-in feature in hqy-lazyload.js but you can easily add it with css. When an image has loaded a loaded class (default: hqy-loaded) is added to the image, so you can add:</p>
+<pre><code class="lang-css"><span class="hljs-selector-class">.hqy-lazy</span> {
+    <span class="hljs-attribute">-webkit-transition</span>: opacity <span class="hljs-number">500ms</span> ease-in-out;
+       <span class="hljs-attribute">-moz-transition</span>: opacity <span class="hljs-number">500ms</span> ease-in-out;
+         <span class="hljs-attribute">-o-transition</span>: opacity <span class="hljs-number">500ms</span> ease-in-out;
+            <span class="hljs-attribute">transition</span>: opacity <span class="hljs-number">500ms</span> ease-in-out;
+             <span class="hljs-attribute">max-width</span>: <span class="hljs-number">100%</span>;
+               <span class="hljs-attribute">opacity</span>: <span class="hljs-number">0</span>;
+}
+<span class="hljs-selector-class">.hqy-lazy</span><span class="hljs-selector-class">.hqy-loaded</span> {
+    <span class="hljs-attribute">opacity</span>: <span class="hljs-number">1</span>;
+}
+</code></pre>
+<h2 id="public-functions">Public functions</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>render()</strong></td>
+<td>Revalidates document for visible images. Useful if you add images with scripting or ajax.</td>
+</tr>
+<tr>
+<td><strong>load(element(s), force)</strong></td>
+<td>Forces the given element(s) to load if not collapsed. If you also want to load a collapsed/hidden elements you can add true as the second parameter.</td>
+</tr>
+</tbody>
+</table>
+<p>You can pass a single element or a list of elements. Tested with getElementById, getElementsByClassName, querySelectorAll, querySelector and jQuery selector. |
+|<strong>destroy()</strong>|     Unbind events and resets image array |</p>
+<pre><code class="lang-js"><span class="hljs-comment">// Example</span>
+<span class="hljs-keyword">var</span> hqyLazy = <span class="hljs-function"><span class="hljs-keyword">new</span> <span class="hljs-title">HqyLazyload</span>();
+<span class="hljs-title">hqyLazy</span>.<span class="hljs-title">functionName</span>(); <span class="hljs-comment">// eg hqyLazy.render();</span></span>
+</code></pre>
+<h2 id="responsive-images">Responsive images</h2>
+<p>An example on how to lazy load and multi-serve responsive images without having the page reflow.</p>
+<p>Markup:</p>
+<pre><code class="lang-html">&lt;div <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">"image-wrapper ratio_16-9"</span>&gt;
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"hqy-lazy"</span> 
+        <span class="hljs-attr">src</span>=<span class="hljs-string">"data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="</span>
+        <span class="hljs-attr">data-src</span>=<span class="hljs-string">"image.jpg"</span>
+        <span class="hljs-attr">data-src-small</span>=<span class="hljs-string">"image-small.jpg"</span>
+        <span class="hljs-attr">alt</span>=<span class="hljs-string">"alt-text"</span>
+    /&gt;</span>
+    <span class="hljs-comment">&lt;!-- Fallback for non JavaScript browsers --&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">noscript</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"image.jpg"</span> <span class="hljs-attr">alt</span>=<span class="hljs-string">"alt-text"</span> /&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">noscript</span>&gt;</span> 
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+</code></pre>
+<p>CSS:</p>
+<pre><code class="lang-css"><span class="hljs-selector-class">.image-wrapper</span> {
+    <span class="hljs-comment">// Adding a loader and background color. The user will see it</span>
+    <span class="hljs-comment">// if the image is loading slow.</span>
+    <span class="hljs-attribute">background</span>: <span class="hljs-number">#1E1E1E</span> url(<span class="hljs-string">'loader.gif'</span>) center center no-repeat;
+    <span class="hljs-attribute">width</span>: <span class="hljs-number">100%</span>
+}
+<span class="hljs-selector-class">.ratio_16-9</span> {
+    <span class="hljs-comment">// The image has a 16/9 ratio. Until the image has loaded</span>
+    <span class="hljs-comment">// we need to reserve some space so the page won't reflow.</span>
+    <span class="hljs-comment">// How to calculate the space (padding-bottom): 9/16*100 = 56.25</span>
+    <span class="hljs-comment">// Another example: you have an image 400x250.</span>
+    <span class="hljs-comment">// So if you want to calculate the space you do: 250/400*100 = 62.5</span>
+    <span class="hljs-attribute">padding-bottom</span>: <span class="hljs-number">56.25%</span>; 
+    <span class="hljs-attribute">height</span>: <span class="hljs-number">0</span>;
+}
+<span class="hljs-selector-class">.hqy-lazy</span> {
+    <span class="hljs-attribute">max-width</span>: <span class="hljs-number">100%</span>;
+}
+</code></pre>
+<h2 id="iframes-unity-games-etc-">Iframes, unity games etc.</h2>
+<p>With hqy-lazyload.js you can lazy load everything with a src attribute, not only images. For example iframes:</p>
+<pre><code class="lang-html">&lt;iframe <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">"hqy-lazy"</span> data-src=<span class="hljs-string">"page.html"</span> width=<span class="hljs-string">"300"</span> height=<span class="hljs-string">"300"</span>&gt;
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Your browser does not support iframes.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span>
+&lt;<span class="hljs-regexp">/iframe&gt;</span>
+</code></pre>
+<h2 id="license">License</h2>
+<p>hqy-lazyload is under the <strong>MIT</strong> license.</p>
+
+	</div>
+</div>
+
+
+<div class="footer">
+	<div class="container">
+		<a href="/"><img src="./assets/logo.png" alt="logo"></a>
+		<p>Copyright 2010 - 2017, RockCookies.</p>
+		<p>Released under the MIT license.</p>
+	</div>
+</div>
+</body>
+</html>
