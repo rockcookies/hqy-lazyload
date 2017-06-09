@@ -202,7 +202,7 @@ var hqylazy = new HqyLazyload({
 
 ## Lazy load HTML5 video example
 <div class="wrapper ratio">
-	<video class="hqy-lazy lazy-item" data-src="./assets/demo/devstories.mp4" controls=""></video>
+	<video class="hqy-lazy lazy-item" data-src="https://www.html5rocks.com/en/tutorials/video/basics/devstories.mp4" controls=""></video>
 </div>
 
 
@@ -214,8 +214,8 @@ var hqylazy = new HqyLazyload({
 
 <div class="wrapper ratio">
 	<video class="hqy-lazy lazy-item" controls="">
-		<source src="./assets/demo/devstories.webm" type="video/webm;codecs=&quot;vp8, vorbis&quot;">
-		<source src="./assets/demo/devstories.mp4" type="video/mp4;codecs=&quot;avc1.42E01E, mp4a.40.2&quot;">
+		<source src="https://www.html5rocks.com/tutorials/video/basics/devstories.webm" type="video/webm;codecs=&quot;vp8, vorbis&quot;">
+		<source src="https://www.html5rocks.com/en/tutorials/video/basics/devstories.mp4" type="video/mp4;codecs=&quot;avc1.42E01E, mp4a.40.2&quot;">
 			Your browser doesn't support HTML5 video tag.
 	</video>
 </div>
