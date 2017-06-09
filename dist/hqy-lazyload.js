@@ -1,4 +1,4 @@
-/* hqy-lazyload@v0.0.2 | https://github.com/Rockcookies/hqy-lazyload | A fast lightweight pure JavaScript script for lazy loading and multi-serving images, iframes, videos and more. */
+/* hqy-lazyload@v1.0.1 | https://github.com/Rockcookies/hqy-lazyload | A fast lightweight pure JavaScript script for lazy loading and multi-serving images, iframes, videos and more. */
 
 !(function () {
 var __modules__ = {};
@@ -23,7 +23,145 @@ function __namespace__ (path, fn) {
     __modules__[path] = fn;
 }
 
-__namespace__('./class.js', function (__include__, exports, module) {
+__namespace__('./defaults.js', function (__include__, exports, module) {
+
+module.exports = {
+	root: document,
+	container: false,
+	elements: '.hqy-lazy',
+	success: false,
+	error: false,
+	offset: 2,
+	separator: ',',
+	loadingClass: 'hqy-loading',
+	successClass: 'hqy-loaded',
+	errorClass: 'hqy-error',
+	breakpoints: false,
+	loadInvisible: false,
+	validateDelay: 25,
+	saveViewportOffsetDelay: 50,
+	srcset: 'data-srcset',
+	src: 'data-src'
+};
+
+});
+__namespace__('./dom.js', function (__include__, exports, module) {
+
+var utils = __include__("./utils.js");
+
+
+var setAttr = exports.setAttr = function (ele, attr, value){
+	ele.setAttribute(attr, value);
+};
+
+var getAttr = exports.getAttr = function (ele, attr) {
+	return ele.getAttribute(attr);
+};
+
+var removeAttr = exports.removeAttr = function (ele, attr){
+	ele.removeAttribute(attr);
+};
+
+var regClassCache = {};
+
+var hasClass = exports.hasClass = function (ele, cls) {
+	if(!regClassCache[cls]){
+		regClassCache[cls] = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+	}
+	return regClassCache[cls].test(getAttr(ele, 'class') || '') && regClassCache[cls];
+};
+
+exports.addClass = function(ele, cls) {
+	if (!hasClass(ele, cls)){
+		setAttr(ele, 'class', utils.trim(getAttr(ele, 'class') || '') + ' ' + cls);
+	}
+};
+
+exports.removeClass = function (ele, cls) {
+	var reg;
+	if ((reg = hasClass(ele,cls))) {
+		setAttr(ele, 'class', (getAttr(ele, 'class') || '').replace(reg, ' '));
+	}
+};
+
+exports.toElements = function (elements) {
+	if (utils.isString(elements)) {
+		return exports.querySelectorAll(elements);
+	} else if (elements && elements.length) {
+		var nodelist = [];
+		for (var i = elements.length; i--; nodelist.unshift(elements[i])) {}
+		return nodelist;
+	} else if (elements) {
+		return [elements];
+	} else {
+		return [];
+	}
+};
+
+
+exports.querySelectorAll = function (q, res) {
+	if (document.querySelectorAll) {
+		res = document.querySelectorAll(q);
+	} else {
+		var d=document
+		, a=d.styleSheets[0] || d.createStyleSheet();
+		a.addRule(q,'f:b');
+		for(var l=d.all,b=0,c=[],f=l.length;b<f;b++)
+			l[b].currentStyle.f && c.push(l[b]);
+
+		a.removeRule(0);
+		res = c;
+	}
+	return res;
+};
+
+exports.contains = function (parentEl, el, _undef) {
+	// 第一个节点是否包含第二个节点
+	//contains 方法支持情况：chrome+ firefox9+ ie5+, opera9.64+(估计从9.0+),safari5.1.7+
+	if (parentEl == el) {
+		return true;
+	}
+	if (!el || !el.nodeType || el.nodeType != 1) {
+		return false;
+	}
+	if (parentEl.contains) {
+		return parentEl.contains(el);
+	}
+	if (parentEl.compareDocumentPosition) {
+		return !!(parentEl.compareDocumentPosition(el) & 16);
+	}
+	var prEl = el.parentNode;
+	while(prEl && prEl != _undef) { // _undef 在这里是 undefined 的值
+		if (prEl == parentEl)
+			return true;
+		prEl = prEl.parentNode;
+	}
+	return false;
+};
+
+exports.equal = function (ele, str) {
+	return ele.nodeName.toLowerCase() === str;
+};
+
+exports.bindEvent = function  (ele, type, fn) {
+	if (ele.attachEvent) {
+		ele.attachEvent && ele.attachEvent('on' + type, fn);
+	} else {
+		ele.addEventListener(type, fn, { capture: false, passive: true });
+	}
+};
+
+exports.unbindEvent = function  (ele, type, fn) {
+	if (ele.detachEvent) {
+		ele.detachEvent && ele.detachEvent('on' + type, fn);
+	} else {
+		ele.removeEventListener(type, fn, { capture: false, passive: true });
+	}
+};
+
+
+});
+__namespace__('./index.js', function (__include__, exports, module) {
 
 var Utils = __include__("./utils.js");
 var Defaults = __include__("./defaults.js");
@@ -38,7 +176,7 @@ module.exports = HqyLazyload;
 
 // device pixel ratio
 // not supported in IE10 - https://msdn.microsoft.com/en-us/library/dn265030(v=vs.85).aspx
-var isRetina = window.devicePixelRatio || window.screen.deviceXDPI / window.screen.logicalXDPI;
+var isRetina = (window.devicePixelRatio || window.screen.deviceXDPI / window.screen.logicalXDPI) > 1;
 
 var saveViewportOffset = function(viewport, offset) {
 	viewport.bottom = (window.innerHeight || document.documentElement.clientHeight) + offset;
@@ -173,7 +311,7 @@ Utils.assign(HqyLazyload.prototype, loadElement, {
 
 
 		// Is element inside a container?
-		if (container && contains(container, ele)) {
+		if (Dom.container && Dom.contains(container, ele)) {
 			var containerRect = container.getBoundingClientRect();
 
 			// Is container in view?
@@ -208,150 +346,6 @@ Utils.assign(HqyLazyload.prototype, loadElement, {
 		}, this);
 	}
 });
-
-
-});
-__namespace__('./defaults.js', function (__include__, exports, module) {
-
-module.exports = {
-	root: document,
-	container: false,
-	elements: '.hqy-lazy',
-	success: false,
-	error: false,
-	offset: 100,
-	separator: '|',
-	loadingClass: 'hqy-loading',
-	successClass: 'hqy-loaded',
-	errorClass: 'hqy-error',
-	breakpoints: false,
-	loadInvisible: false,
-	validateDelay: 25,
-	saveViewportOffsetDelay: 50,
-	srcset: 'data-srcset',
-	src: 'data-src'
-};
-
-});
-__namespace__('./dom.js', function (__include__, exports, module) {
-
-var utils = __include__("./utils.js");
-
-var regClassCache = {};
-
-var hasClass = exports.hasClass = function (ele, cls) {
-	if(!regClassCache[cls]){
-		regClassCache[cls] = new RegExp('(\\s|^)'+cls+'(\\s|$)');
-	}
-	return regClassCache[cls].test(exports.getAttr(ele, 'class') || '') && regClassCache[cls];
-};
-
-exports.addClass = function(ele, cls) {
-	if (!hasClass(ele, cls)){
-		ele.setAttribute('class', (exports.getAttr(ele, 'class') || '').trim() + ' ' + cls);
-	}
-};
-
-exports.removeClass = function (ele, cls) {
-	var reg;
-	if ((reg = hasClass(ele,cls))) {
-		ele.setAttribute('class', (exports.getAttr(ele, 'class') || '').replace(reg, ' '));
-	}
-};
-
-exports.toElements = function (elements) {
-	if (utils.isString(elements)) {
-		return exports.querySelectorAll(elements);
-	} else if (elements && elements.length) {
-		var nodelist = [];
-		for (var i = elements.length; i--; nodelist.unshift(elements[i])) {}
-		return nodelist;
-	} else if (elements) {
-		return [elements];
-	} else {
-		return [];
-	}
-};
-
-
-exports.querySelectorAll = function (q, res) {
-	if (document.querySelectorAll) {
-		res = document.querySelectorAll(q);
-	} else {
-		var d=document
-		, a=d.styleSheets[0] || d.createStyleSheet();
-		a.addRule(q,'f:b');
-		for(var l=d.all,b=0,c=[],f=l.length;b<f;b++)
-			l[b].currentStyle.f && c.push(l[b]);
-
-		a.removeRule(0);
-		res = c;
-	}
-	return res;
-};
-
-exports.contains = function (parentEl, el, _undef) {
-	// 第一个节点是否包含第二个节点
-	//contains 方法支持情况：chrome+ firefox9+ ie5+, opera9.64+(估计从9.0+),safari5.1.7+
-	if (parentEl == el) {
-		return true;
-	}
-	if (!el || !el.nodeType || el.nodeType != 1) {
-		return false;
-	}
-	if (parentEl.contains) {
-		return parentEl.contains(el);
-	}
-	if (parentEl.compareDocumentPosition) {
-		return !!(parentEl.compareDocumentPosition(el) & 16);
-	}
-	var prEl = el.parentNode;
-	while(prEl && prEl != _undef) { // _undef 在这里是 undefined 的值
-		if (prEl == parentEl)
-			return true;
-		prEl = prEl.parentNode;
-	}
-	return false;
-};
-
-exports.setAttr = function (ele, attr, value){
-	ele.setAttribute(attr, value);
-};
-
-exports.getAttr = function (ele, attr) {
-	return ele.getAttribute(attr);
-};
-
-exports.removeAttr = function (ele, attr){
-	ele.removeAttribute(attr);
-};
-
-exports.equal = function (ele, str) {
-	return ele.nodeName.toLowerCase() === str;
-};
-
-exports.bindEvent = function  (ele, type, fn) {
-	if (ele.attachEvent) {
-		ele.attachEvent && ele.attachEvent('on' + type, fn);
-	} else {
-		ele.addEventListener(type, fn, { capture: false, passive: true });
-	}
-};
-
-exports.unbindEvent = function  (ele, type, fn) {
-	if (ele.detachEvent) {
-		ele.detachEvent && ele.detachEvent('on' + type, fn);
-	} else {
-		ele.removeEventListener(type, fn, { capture: false, passive: true });
-	}
-};
-
-
-});
-__namespace__('./index.js', function (__include__, exports, module) {
-
-// module.exports = __include__("./class.js");
-
 
 
 });
@@ -493,6 +487,10 @@ var each = exports.each = function (object, fn, context) {
 	}
 };
 
+exports.trim = function (str) {
+	return str.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
+};
+
 exports.assign = function (target) {
 	for (var i=1; i<arguments.length; i++) {
 		var nextSource = arguments[i];
@@ -511,14 +509,7 @@ exports.assign = function (target) {
 
 exports.isUndefined = function (obj) { return obj === void 0; }
 
-var types = ['Arguments', 'Function', 'String', 'Number', 'Date', 'RegExp', 'Error'];
-if (!Array.isArray) {
-	types.push('Array');
-} else {
-	exports.isArray = Array.isArray;
-}
-
-each(types, function (type) {
+each(['Arguments', 'Function', 'String', 'Number', 'Date', 'RegExp', 'Error'], function (type) {
 	exports['is' + type] = function (o) {
 		return toString.call(o) === '[object ' + type + ']';
 	};
