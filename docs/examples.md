@@ -12,7 +12,7 @@
 </div>
 
 ``` html
-<img class="hqy-lazy lazy-item" data-src="image.jpg" />
+<img class="hqy-lazy" data-src="image.jpg" />
 ```
 
 
@@ -41,7 +41,7 @@
 </div>
 
 ``` html
-<img class="hqy-lazy lazy-item" src="low-res-image.jpg" data-src="image.jpg" />
+<img class="hqy-lazy" src="low-res-image.jpg" data-src="image.jpg" />
 ```
 
 ## Lazy load image example with srcset
@@ -58,7 +58,7 @@
 </div>
 
 ``` html
-<img class="hqy-lazy lazy-item" 
+<img class="hqy-lazy" 
 	sizes="100vw"
 	data-srcset="large.jpg 1024w, medium.jpg 640w, small.jpg 320w"
 	data-src="medium.jpg"
@@ -94,7 +94,7 @@
 </div>
 
 ``` html
-<img class="hqy-lazy lazy-item" data-src="image.jpg,retina-image.jpg" />
+<img class="hqy-lazy" data-src="image.jpg,retina-image.jpg" />
 ```
 
 ## Lazy load background image example

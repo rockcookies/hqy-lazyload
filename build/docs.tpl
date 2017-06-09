@@ -14,7 +14,7 @@
 
 <div class="navigation">
 	<div class="container">
-		<a href="/" class="brand nav fl">hqy-lazyload</a>
+		<a href="./" class="brand nav fl">hqy-lazyload</a>
 		<div class="navbar nav fn-clear fr">
 			<a href="./documentation.html">Documentation</a>
 			<a href="./examples.html">Examples</a>
@@ -48,7 +48,7 @@
 
 <div class="footer">
 	<div class="container">
-		<a href="/"><img src="./assets/logo.png" alt="logo"></a>
+		<a href="./"><img src="./assets/logo.png" alt="logo"></a>
 		<p>Copyright 2010 - 2017, RockCookies.</p>
 		<p>Released under the MIT license.</p>
 	</div>
