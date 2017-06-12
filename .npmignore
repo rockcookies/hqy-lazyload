@@ -2,6 +2,7 @@
 build
 docs
 node_modules
+.npmignore
 .gitignore
 gulpfile.js
 LICENSE
