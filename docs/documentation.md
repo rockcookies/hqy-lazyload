@@ -38,7 +38,7 @@ You can lazy load your images in just two easy steps.
 
 |Options|Description|
 | ----- | ----------- |
-|**breakpoints [sss] (-)**| Multi-serve images based on screen size. [Go to multi-serve image example](#) |
+|**breakpoints [array] (-)**| Multi-serve images based on screen size. [Go to multi-serve image example](#) |
 |**container [element] (window)**| If you want to lazy load elements inside a scrolling container change the default value to the element of the container |
 |**elements [string] (‘.hqy-lazy’)**| 	Element selector or document node list for elements that should lazy load. If you want to lazy load all images write ‘img’ |
 |**error [function(ele, msg)] (-)**| Callback for when something goes wrong. There are two error messages, missing and invalid. You’ll get missing if no data-src is defined. Invalid if the data-src is invalid. [Go to callback example](#) |

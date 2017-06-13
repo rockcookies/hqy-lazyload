@@ -103,6 +103,9 @@
 	<div class="hqy-lazy lazy-item" data-src="./assets/demo/05.jpg"></div>
 </div>
 
+``` html
+<div class="hqy-lazy" data-src="image.jpg"></div>
+```
 
 <style>
 .lazy-box {
